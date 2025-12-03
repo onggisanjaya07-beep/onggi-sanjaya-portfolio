@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Moon, Sun } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTheme } from '@/components/ThemeProvider';
 
 const navItems = [
   { label: 'Home', href: '#home' },
@@ -13,6 +15,7 @@ const navItems = [
 export const Navigation = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,6 +62,15 @@ export const Navigation = () => {
             </a>
           </li>
         ))}
+        <li>
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+        </li>
       </ul>
     </nav>
   );
