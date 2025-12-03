@@ -1,6 +1,18 @@
+import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import { cn } from '@/lib/utils';
+
 export const AboutSection = () => {
+  const { ref, isVisible } = useScrollAnimation(0.2);
+
   return (
-    <section id="about" className="py-24 px-4 bg-secondary/30">
+    <section
+      id="about"
+      ref={ref as React.RefObject<HTMLElement>}
+      className={cn(
+        'py-24 px-4 bg-secondary/30 transition-all duration-700',
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      )}
+    >
       <div className="max-w-3xl mx-auto">
         <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12">
           About Me

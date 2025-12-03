@@ -2,9 +2,12 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import { cn } from '@/lib/utils';
 
 export const ContactSection = () => {
   const { toast } = useToast();
+  const { ref, isVisible } = useScrollAnimation(0.1);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,19 +33,38 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 px-4 bg-secondary/30">
+    <section
+      id="contact"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="py-24 px-4 bg-secondary/30"
+    >
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4">
+        <h2
+          className={cn(
+            'font-display text-3xl md:text-4xl font-bold text-center mb-4 transition-all duration-700',
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          )}
+        >
           Get In Touch
         </h2>
-        <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
+        <p
+          className={cn(
+            'text-muted-foreground text-center mb-12 max-w-2xl mx-auto transition-all duration-700 delay-100',
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          )}
+        >
           I'm currently looking for new opportunities. Whether you have a
           question or just want to say hi, I'll try my best to get back to you!
         </p>
 
         <div className="grid md:grid-cols-2 gap-12">
           {/* Contact Info */}
-          <div className="space-y-6">
+          <div
+            className={cn(
+              'space-y-6 transition-all duration-700 delay-200',
+              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+            )}
+          >
             <div className="bg-card rounded-2xl p-6 shadow-soft">
               <h3 className="font-display font-bold text-xl mb-6">
                 Contact Information
@@ -89,7 +111,12 @@ export const ContactSection = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-card rounded-2xl p-6 shadow-soft">
+          <div
+            className={cn(
+              'bg-card rounded-2xl p-6 shadow-soft transition-all duration-700 delay-300',
+              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
+            )}
+          >
             <h3 className="font-display font-bold text-xl mb-6">
               Send a Message
             </h3>
