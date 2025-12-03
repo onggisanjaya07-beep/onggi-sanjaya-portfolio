@@ -3,6 +3,9 @@ import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
 import projectBriapi from '@/assets/project-briapi.jpg';
 import projectNeo from '@/assets/project-neo.jpg';
+import projectDevportal from '@/assets/project-devportal.jpg';
+import projectOnefis from '@/assets/project-onefis.jpg';
+import projectHomecare from '@/assets/project-homecare.jpg';
 
 interface Project {
   title: string;
@@ -13,6 +16,28 @@ interface Project {
 }
 
 const projects: Project[] = [
+  {
+    title: 'BRIAPI Devportal',
+    description:
+      'Developer portal for BRIAPI at Bank Rakyat Indonesia, providing comprehensive API documentation, sandbox testing environment, and developer tools for banking integration services.',
+    image: projectDevportal,
+    tags: ['Next.js', 'TypeScript', 'REST API', 'Drupal'],
+    link: 'https://developers.bri.co.id/id',
+  },
+  {
+    title: 'Onefis Pertamina',
+    description:
+      'Enterprise application for PT Pertamina, featuring data visualization dashboards, analytics reporting, and internal operational management tools for the national oil and gas company.',
+    image: projectOnefis,
+    tags: ['React.js', 'TypeScript', 'REST API', 'Chart.js'],
+  },
+  {
+    title: 'Homecare',
+    description:
+      'Healthcare mobile application connecting patients with medical professionals for home care services, featuring appointment booking, real-time tracking, and medical records management.',
+    image: projectHomecare,
+    tags: ['React Native', 'TypeScript', 'REST API', 'Firebase'],
+  },
   {
     title: 'BRIAPI Dashboard',
     description:
