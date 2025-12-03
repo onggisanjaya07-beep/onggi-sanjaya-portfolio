@@ -6,6 +6,8 @@ import {
   Gauge, 
   Users 
 } from 'lucide-react';
+import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import { cn } from '@/lib/utils';
 
 interface SkillCategory {
   title: string;
@@ -57,13 +59,29 @@ const skillCategories: SkillCategory[] = [
 ];
 
 export const SkillsSection = () => {
+  const { ref, isVisible } = useScrollAnimation(0.1);
+
   return (
-    <section id="skills" className="py-24 px-4 bg-secondary/30">
+    <section
+      id="skills"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="py-24 px-4 bg-secondary/30"
+    >
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4">
+        <h2
+          className={cn(
+            'font-display text-3xl md:text-4xl font-bold text-center mb-4 transition-all duration-700',
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          )}
+        >
           Skills & Tools
         </h2>
-        <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
+        <p
+          className={cn(
+            'text-muted-foreground text-center mb-12 max-w-2xl mx-auto transition-all duration-700 delay-100',
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          )}
+        >
           Technologies and tools I use to bring ideas to life.
         </p>
 
@@ -71,8 +89,11 @@ export const SkillsSection = () => {
           {skillCategories.map((category, index) => (
             <div
               key={category.title}
-              className="bg-card rounded-2xl p-6 shadow-soft hover:shadow-card transition-shadow duration-300"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className={cn(
+                'bg-card rounded-2xl p-6 shadow-soft hover:shadow-card transition-all duration-500',
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              )}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 rounded-lg bg-primary/10 text-primary">

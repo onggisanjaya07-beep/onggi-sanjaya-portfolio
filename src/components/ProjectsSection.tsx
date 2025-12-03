@@ -1,4 +1,6 @@
 import { ExternalLink } from 'lucide-react';
+import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import { cn } from '@/lib/utils';
 import projectBriapi from '@/assets/project-briapi.jpg';
 import projectNeo from '@/assets/project-neo.jpg';
 
@@ -27,11 +29,14 @@ const projects: Project[] = [
   },
 ];
 
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+const ProjectCard = ({ project, index, isVisible }: { project: Project; index: number; isVisible: boolean }) => {
   return (
     <div
-      className="group relative bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500"
-      style={{ animationDelay: `${index * 0.1}s` }}
+      className={cn(
+        'group relative bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500',
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      )}
+      style={{ transitionDelay: `${index * 150}ms` }}
     >
       {/* Project Image */}
       <div className="relative h-56 md:h-72 overflow-hidden">
@@ -78,20 +83,36 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 };
 
 export const ProjectsSection = () => {
+  const { ref, isVisible } = useScrollAnimation(0.1);
+
   return (
-    <section id="projects" className="py-24 px-4">
+    <section
+      id="projects"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="py-24 px-4"
+    >
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4">
+        <h2
+          className={cn(
+            'font-display text-3xl md:text-4xl font-bold text-center mb-4 transition-all duration-700',
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          )}
+        >
           My Projects
         </h2>
-        <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
+        <p
+          className={cn(
+            'text-muted-foreground text-center mb-12 max-w-2xl mx-auto transition-all duration-700 delay-100',
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          )}
+        >
           Here are some of the projects I've worked on. Each project has helped
           me grow as a developer and solve real-world problems.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <ProjectCard key={project.title} project={project} index={index} />
+            <ProjectCard key={project.title} project={project} index={index} isVisible={isVisible} />
           ))}
         </div>
       </div>
