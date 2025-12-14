@@ -1,4 +1,4 @@
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Eye } from 'lucide-react';
 import { useState } from 'react';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
@@ -149,7 +149,7 @@ const ProjectCard = ({
         </p>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
           {project.tags.map((tag) => (
             <span
               key={tag}
@@ -159,6 +159,18 @@ const ProjectCard = ({
             </span>
           ))}
         </div>
+
+        {/* View Detail Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpenDetail(project);
+          }}
+          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground font-medium text-sm rounded-lg transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98]"
+        >
+          <Eye className="w-4 h-4" />
+          View Detail
+        </button>
       </div>
     </div>
   );
