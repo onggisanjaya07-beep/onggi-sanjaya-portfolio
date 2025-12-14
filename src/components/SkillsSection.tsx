@@ -65,12 +65,12 @@ export const SkillsSection = () => {
     <section
       id="skills"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-24 px-4 bg-secondary/30"
+      className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-secondary/30"
     >
       <div className="max-w-5xl mx-auto">
         <h2
           className={cn(
-            'font-display text-3xl md:text-4xl font-bold text-center mb-4 transition-all duration-700',
+            'font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4 transition-all duration-700',
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}
         >
@@ -78,34 +78,34 @@ export const SkillsSection = () => {
         </h2>
         <p
           className={cn(
-            'text-muted-foreground text-center mb-12 max-w-2xl mx-auto transition-all duration-700 delay-100',
+            'text-sm sm:text-base text-muted-foreground text-center mb-8 sm:mb-12 max-w-2xl mx-auto transition-all duration-700 delay-100',
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}
         >
           Technologies and tools I use to bring ideas to life.
         </p>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {skillCategories.map((category, index) => (
             <div
               key={category.title}
               className={cn(
-                'bg-card rounded-2xl p-6 shadow-soft hover:shadow-card transition-all duration-500',
+                'bg-card rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-soft hover:shadow-card transition-all duration-500',
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               )}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-primary/10 text-primary">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 text-primary">
                   {category.icon}
                 </div>
-                <h3 className="font-display font-semibold">{category.title}</h3>
+                <h3 className="font-display font-semibold text-sm sm:text-base">{category.title}</h3>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1 text-sm bg-secondary text-secondary-foreground rounded-full"
+                    className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm bg-secondary text-secondary-foreground rounded-full"
                   >
                     {skill}
                   </span>

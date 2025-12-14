@@ -113,14 +113,14 @@ const ProjectCard = ({
   return (
     <div
       className={cn(
-        'group relative bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 cursor-pointer',
+        'group relative bg-card rounded-xl sm:rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 cursor-pointer',
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       )}
       style={{ transitionDelay: `${index * 150}ms` }}
       onClick={() => onOpenDetail(project)}
     >
       {/* Project Image */}
-      <div className="relative h-56 md:h-72 overflow-hidden">
+      <div className="relative h-44 sm:h-56 md:h-64 lg:h-72 overflow-hidden">
         <img
           src={project.image}
           alt={project.title}
@@ -134,26 +134,26 @@ const ProjectCard = ({
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="absolute top-4 right-4 p-2 bg-card rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 sm:p-2 bg-card rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
           >
-            <ExternalLink className="w-5 h-5" />
+            <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
           </a>
         )}
       </div>
 
       {/* Project Info */}
-      <div className="p-6">
-        <h3 className="font-display text-xl font-bold mb-3">{project.title}</h3>
-        <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+      <div className="p-4 sm:p-6">
+        <h3 className="font-display text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3">{project.title}</h3>
+        <p className="text-muted-foreground text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 sm:line-clamp-3">
           {project.description}
         </p>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="px-3 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full"
+              className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full"
             >
               {tag}
             </span>
@@ -173,12 +173,12 @@ export const ProjectsSection = () => {
       <section
         id="projects"
         ref={ref as React.RefObject<HTMLElement>}
-        className="py-24 px-4"
+        className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8"
       >
         <div className="max-w-5xl mx-auto">
           <h2
             className={cn(
-              'font-display text-3xl md:text-4xl font-bold text-center mb-4 transition-all duration-700',
+              'font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4 transition-all duration-700',
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             )}
           >
@@ -186,7 +186,7 @@ export const ProjectsSection = () => {
           </h2>
           <p
             className={cn(
-              'text-muted-foreground text-center mb-12 max-w-2xl mx-auto transition-all duration-700 delay-100',
+              'text-sm sm:text-base text-muted-foreground text-center mb-8 sm:mb-12 max-w-2xl mx-auto transition-all duration-700 delay-100 px-2',
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             )}
           >
@@ -194,7 +194,7 @@ export const ProjectsSection = () => {
             me grow as a developer and solve real-world problems.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {projects.map((project, index) => (
               <ProjectCard 
                 key={project.title} 
