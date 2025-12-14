@@ -1,44 +1,44 @@
 import { useState, useEffect } from 'react';
-import { Moon, Sun, Menu, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useTheme } from '@/components/ThemeProvider';
+import { Menu, X, Moon, Sun } from 'lucide-react';
+import { useTheme } from './ThemeProvider';
 
 const navItems = [
-  { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
-  { label: 'Projects', href: '#projects' },
   { label: 'Skills', href: '#skills' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Projects', href: '#projects' },
   { label: 'Contact', href: '#contact' },
 ];
 
-export const Navigation = () => {
-  const [activeSection, setActiveSection] = useState('home');
+const Navigation = () => {
+  const [activeSection, setActiveSection] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      const sections = navItems.map(item => item.href.slice(1));
+      const sections = navItems.map(item => item.href.substring(1));
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          return rect.top <= 150 && rect.bottom >= 150;
+          return rect.top <= 100 && rect.bottom >= 100;
         }
         return false;
       });
-      if (current) setActiveSection(current);
+      if (current) {
+        setActiveSection(`#${current}`);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when clicking outside
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -51,118 +51,187 @@ export const Navigation = () => {
   }, [isMobileMenuOpen]);
 
   const handleNavClick = (href: string) => {
-    setIsMobileMenuOpen(false);
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+    closeMobileMenu();
   };
+
+  const openMobileMenu = () => {
+    setIsMobileMenuOpen(true);
+    setTimeout(() => setIsAnimating(true), 10);
+  };
+
+  const closeMobileMenu = () => {
+    setIsAnimating(false);
+    setTimeout(() => {
+      setIsMobileMenuOpen(false);
+    }, 350);
+  };
+
 
   return (
     <>
       {/* Desktop Navigation */}
       <nav
-        className={cn(
-          'fixed top-4 left-1/2 -translate-x-1/2 z-50 px-2 py-2 rounded-full transition-all duration-300 hidden md:block',
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-card/90 shadow-elevated backdrop-blur-lg'
-            : 'bg-card/70 shadow-soft backdrop-blur-md'
-        )}
+            ? 'bg-background/80 backdrop-blur-md shadow-lg'
+            : 'bg-transparent'
+        }`}
       >
-        <ul className="flex items-center gap-1">
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                className={cn(
-                  'px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
-                  activeSection === item.href.slice(1)
-                    ? 'bg-foreground text-background'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                )}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
-              aria-label="Toggle theme"
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            {/* Logo */}
+            <a
+              href="#"
+              className="text-xl sm:text-2xl font-bold text-primary hover:text-primary/80 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             >
-              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
-          </li>
-        </ul>
-      </nav>
+              Onggi
+            </a>
 
-      {/* Mobile Navigation */}
-      <div className="md:hidden fixed top-4 right-4 z-50 flex items-center gap-2">
-        <button
-          onClick={toggleTheme}
-          className={cn(
-            'p-3 rounded-full transition-all duration-200',
-            isScrolled
-              ? 'bg-card/90 shadow-elevated backdrop-blur-lg'
-              : 'bg-card/70 shadow-soft backdrop-blur-md'
-          )}
-          aria-label="Toggle theme"
-        >
-          {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className={cn(
-            'p-3 rounded-full transition-all duration-200',
-            isScrolled
-              ? 'bg-card/90 shadow-elevated backdrop-blur-lg'
-              : 'bg-card/70 shadow-soft backdrop-blur-md'
-          )}
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu Overlay */}
-      <div
-        className={cn(
-          'fixed inset-0 z-40 bg-background/95 backdrop-blur-lg transition-all duration-300 md:hidden',
-          isMobileMenuOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
-        )}
-      >
-        <div className="flex flex-col items-center justify-center h-full">
-          <ul className="flex flex-col items-center gap-2">
-            {navItems.map((item, index) => (
-              <li
-                key={item.href}
-                className={cn(
-                  'transition-all duration-300',
-                  isMobileMenuOpen
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-4'
-                )}
-                style={{ transitionDelay: `${index * 50}ms` }}
-              >
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-8">
+              {navItems.map((item) => (
                 <button
+                  key={item.href}
                   onClick={() => handleNavClick(item.href)}
-                  className={cn(
-                    'px-6 py-3 rounded-full text-lg font-medium transition-all duration-200',
-                    activeSection === item.href.slice(1)
-                      ? 'bg-foreground text-background'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                  )}
+                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                    activeSection === item.href
+                      ? 'text-primary'
+                      : 'text-muted-foreground'
+                  }`}
                 >
                   {item.label}
                 </button>
-              </li>
-            ))}
-          </ul>
+              ))}
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-full hover:bg-muted transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-5 h-5 text-foreground" />
+                ) : (
+                  <Moon className="w-5 h-5 text-foreground" />
+                )}
+              </button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="flex md:hidden items-center space-x-2">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-full hover:bg-muted transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-5 h-5 text-foreground" />
+                ) : (
+                  <Moon className="w-5 h-5 text-foreground" />
+                )}
+              </button>
+              <button
+                onClick={openMobileMenu}
+                className="p-2 rounded-lg hover:bg-muted transition-colors"
+                aria-label="Open menu"
+              >
+                <Menu className="w-6 h-6 text-foreground" />
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      </nav>
+
+      {/* Mobile Menu Overlay with Slide & Fade Animation */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-[60] md:hidden">
+          {/* Backdrop with smooth fade */}
+          <div
+            className={`absolute inset-0 bg-background/90 backdrop-blur-lg transition-opacity duration-300 ease-out ${
+              isAnimating ? 'opacity-100' : 'opacity-0'
+            }`}
+            onClick={closeMobileMenu}
+          />
+
+          {/* Slide-in menu panel from right */}
+          <div
+            className={`absolute top-0 right-0 h-full w-full max-w-sm bg-background/95 backdrop-blur-md shadow-2xl border-l border-border/50 transform transition-all duration-300 ease-out ${
+              isAnimating ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+            }`}
+          >
+            {/* Header with close button */}
+            <div className="flex items-center justify-between p-4 border-b border-border/30">
+              <span
+                className={`text-lg font-semibold text-primary transition-all duration-300 delay-100 ${
+                  isAnimating ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                }`}
+              >
+                Menu
+              </span>
+              <button
+                onClick={closeMobileMenu}
+                className={`p-2 rounded-lg hover:bg-muted transition-all duration-300 ${
+                  isAnimating ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-75'
+                }`}
+                style={{ transitionDelay: isAnimating ? '50ms' : '0ms' }}
+                aria-label="Close menu"
+              >
+                <X className="w-6 h-6 text-foreground" />
+              </button>
+            </div>
+
+            {/* Navigation Items with staggered slide-in animation */}
+            <div className="flex flex-col py-8 px-6 space-y-2">
+              {navItems.map((item, index) => (
+                <button
+                  key={item.href}
+                  onClick={() => handleNavClick(item.href)}
+                  className={`text-left text-xl font-medium py-4 px-4 rounded-lg transition-all duration-300 hover:bg-muted hover:text-primary transform ${
+                    activeSection === item.href
+                      ? 'text-primary bg-primary/10'
+                      : 'text-foreground'
+                  } ${
+                    isAnimating
+                      ? 'opacity-100 translate-x-0'
+                      : 'opacity-0 translate-x-8'
+                  }`}
+                  style={{
+                    transitionDelay: isAnimating ? `${index * 60 + 100}ms` : '0ms',
+                  }}
+                >
+                  <span className="flex items-center gap-3">
+                    <span className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                      activeSection === item.href ? 'bg-primary' : 'bg-muted-foreground/30'
+                    }`} />
+                    {item.label}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Footer decoration */}
+            <div
+              className={`absolute bottom-8 left-0 right-0 px-6 transition-all duration-500 ${
+                isAnimating ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: isAnimating ? '400ms' : '0ms' }}
+            >
+              <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+              <p className="text-center text-sm text-muted-foreground mt-4">
+                © 2024 Onggi Sanjaya
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
+
+export default Navigation;
