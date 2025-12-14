@@ -83,12 +83,12 @@ export const ExperienceSection = () => {
     <section
       id="experience"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-24 px-4"
+      className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-3xl mx-auto">
         <h2
           className={cn(
-            'font-display text-3xl md:text-4xl font-bold text-center mb-4 transition-all duration-700',
+            'font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4 transition-all duration-700',
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}
         >
@@ -96,7 +96,7 @@ export const ExperienceSection = () => {
         </h2>
         <p
           className={cn(
-            'text-muted-foreground text-center mb-12 max-w-2xl mx-auto transition-all duration-700 delay-100',
+            'text-sm sm:text-base text-muted-foreground text-center mb-8 sm:mb-12 max-w-2xl mx-auto transition-all duration-700 delay-100',
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}
         >
@@ -105,55 +105,57 @@ export const ExperienceSection = () => {
 
         <div className="relative">
           {/* Timeline line */}
-          <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border" />
+          <div className="absolute left-4 sm:left-6 top-0 bottom-0 w-0.5 bg-border" />
 
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {timelineItems.map((item, index) => (
               <div
                 key={index}
                 className={cn(
-                  'relative pl-16 transition-all duration-500',
+                  'relative pl-12 sm:pl-16 transition-all duration-500',
                   isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
                 )}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
                 {/* Timeline dot */}
                 <div
-                  className={`absolute left-3 w-6 h-6 rounded-full flex items-center justify-center ${getIconBg(
+                  className={`absolute left-1.5 sm:left-3 w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center ${getIconBg(
                     item.type
                   )}`}
                 >
-                  {getIcon(item.type)}
+                  <div className="scale-75 sm:scale-100">
+                    {getIcon(item.type)}
+                  </div>
                 </div>
 
-                <div className="bg-card rounded-2xl p-6 shadow-soft hover:shadow-card transition-shadow duration-300">
-                  <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
+                <div className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-soft hover:shadow-card transition-shadow duration-300">
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-start sm:justify-between gap-2 mb-2">
                     <div>
-                      <h3 className="font-display font-bold text-lg">
+                      <h3 className="font-display font-bold text-base sm:text-lg">
                         {item.title}
                       </h3>
-                      <p className="text-primary font-medium">
+                      <p className="text-primary font-medium text-sm sm:text-base">
                         {item.organization}
                       </p>
                       {item.location && (
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                           {item.location}
                         </p>
                       )}
                     </div>
-                    <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full">
+                    <span className="text-xs sm:text-sm text-muted-foreground bg-secondary px-2 sm:px-3 py-0.5 sm:py-1 rounded-full w-fit">
                       {item.period}
                     </span>
                   </div>
 
                   {item.description && (
-                    <ul className="mt-4 space-y-2">
+                    <ul className="mt-3 sm:mt-4 space-y-1.5 sm:space-y-2">
                       {item.description.map((desc, i) => (
                         <li
                           key={i}
-                          className="text-sm text-muted-foreground flex items-start gap-2"
+                          className="text-xs sm:text-sm text-muted-foreground flex items-start gap-2"
                         >
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                          <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-primary mt-1.5 sm:mt-2 flex-shrink-0" />
                           {desc}
                         </li>
                       ))}

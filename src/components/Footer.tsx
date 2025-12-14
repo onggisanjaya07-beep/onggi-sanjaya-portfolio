@@ -4,14 +4,14 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-8 px-4 border-t border-border">
+    <footer className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 border-t border-border">
       <div className="max-w-5xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
+          <p className="text-xs sm:text-sm text-muted-foreground">
             © {currentYear} Onggi Sanjaya. All rights reserved.
           </p>
-          <p className="text-sm text-muted-foreground flex items-center gap-1">
-            Built with <Heart className="w-4 h-4 text-accent fill-accent" /> using React
+          <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1">
+            Built with <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent fill-accent" /> using React
           </p>
         </div>
       </div>
