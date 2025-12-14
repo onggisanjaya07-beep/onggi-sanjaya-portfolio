@@ -101,13 +101,31 @@ const Navigation = () => {
                 <button
                   key={item.href}
                   onClick={() => handleNavClick(item.href)}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    activeSection === item.href
-                      ? 'text-primary'
-                      : 'text-muted-foreground'
-                  }`}
+                  className="group relative py-2"
                 >
-                  {item.label}
+                  <span
+                    className={`text-sm font-medium transition-all duration-300 group-hover:text-primary ${
+                      activeSection === item.href
+                        ? 'text-primary'
+                        : 'text-muted-foreground'
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                  {/* Animated underline */}
+                  <span
+                    className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ease-out ${
+                      activeSection === item.href
+                        ? 'w-full'
+                        : 'w-0 group-hover:w-full'
+                    }`}
+                  />
+                  {/* Glow effect on hover */}
+                  <span
+                    className={`absolute -inset-x-2 -inset-y-1 rounded-lg bg-primary/0 transition-all duration-300 group-hover:bg-primary/10 ${
+                      activeSection === item.href ? 'bg-primary/5' : ''
+                    }`}
+                  />
                 </button>
               ))}
               <button
