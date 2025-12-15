@@ -1,14 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Moon, Sun } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
-
-const navItems = [
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
-];
+import { useLanguage } from '@/contexts/LanguageContext';
+import { LanguageToggle } from './LanguageToggle';
 
 const Navigation = () => {
   const [activeSection, setActiveSection] = useState('');
@@ -16,6 +10,15 @@ const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { t } = useLanguage();
+
+  const navItems = [
+    { label: t.nav.about, href: '#about' },
+    { label: t.nav.skills, href: '#skills' },
+    { label: t.nav.experience, href: '#experience' },
+    { label: t.nav.projects, href: '#projects' },
+    { label: t.nav.contact, href: '#contact' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,7 +40,7 @@ const Navigation = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [navItems]);
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -128,6 +131,7 @@ const Navigation = () => {
                   />
                 </button>
               ))}
+              <LanguageToggle />
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-full hover:bg-muted transition-colors"
@@ -143,6 +147,7 @@ const Navigation = () => {
 
             {/* Mobile Menu Button */}
             <div className="flex md:hidden items-center space-x-2">
+              <LanguageToggle />
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-full hover:bg-muted transition-colors"
@@ -190,7 +195,7 @@ const Navigation = () => {
                   isAnimating ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                 }`}
               >
-                Menu
+                {t.nav.menu}
               </span>
               <button
                 onClick={closeMobileMenu}

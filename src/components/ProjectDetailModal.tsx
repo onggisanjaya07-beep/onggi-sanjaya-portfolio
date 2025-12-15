@@ -1,4 +1,4 @@
-import { ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import {
   Dialog,
@@ -7,6 +7,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Project {
   title: string;
@@ -27,6 +28,7 @@ interface ProjectDetailModalProps {
 
 export const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailModalProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { t } = useLanguage();
 
   if (!project) return null;
 
@@ -97,7 +99,7 @@ export const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailMo
           {/* Features */}
           {project.features && project.features.length > 0 && (
             <div>
-              <h4 className="font-semibold mb-2">Key Features</h4>
+              <h4 className="font-semibold mb-2">{t.projects.features}</h4>
               <ul className="list-disc list-inside text-muted-foreground space-y-1">
                 {project.features.map((feature, index) => (
                   <li key={index}>{feature}</li>
@@ -108,7 +110,7 @@ export const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailMo
 
           {/* Technologies */}
           <div>
-            <h4 className="font-semibold mb-2">Technologies</h4>
+            <h4 className="font-semibold mb-2">{t.projects.technologies}</h4>
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
                 <span
@@ -126,7 +128,7 @@ export const ProjectDetailModal = ({ project, isOpen, onClose }: ProjectDetailMo
             <Button asChild className="w-full">
               <a href={project.link} target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="w-4 h-4 mr-2" />
-                Visit Project
+                {t.projects.visitProject}
               </a>
             </Button>
           )}
