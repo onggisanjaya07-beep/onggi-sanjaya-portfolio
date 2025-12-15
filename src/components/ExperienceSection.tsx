@@ -1,5 +1,6 @@
 import { Briefcase, GraduationCap, Award } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
 interface TimelineItem {
@@ -78,6 +79,7 @@ const getIconBg = (type: TimelineItem['type']) => {
 
 export const ExperienceSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
+  const { t } = useLanguage();
 
   return (
     <section
@@ -92,7 +94,7 @@ export const ExperienceSection = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}
         >
-          Experience & Education
+          {t.experience.title}
         </h2>
         <p
           className={cn(
@@ -100,7 +102,7 @@ export const ExperienceSection = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}
         >
-          My professional journey and educational background.
+          {t.experience.description}
         </p>
 
         <div className="relative">

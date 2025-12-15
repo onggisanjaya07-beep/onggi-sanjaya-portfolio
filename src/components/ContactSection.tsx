@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
 export const ContactSection = () => {
   const { toast } = useToast();
   const { ref, isVisible } = useScrollAnimation(0.1);
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -25,8 +27,8 @@ export const ContactSection = () => {
     window.open(mailtoLink, '_blank');
     
     toast({
-      title: 'Opening email client...',
-      description: 'Your default email client should open shortly.',
+      title: t.contact.toastTitle,
+      description: t.contact.toastDescription,
     });
     
     setFormData({ name: '', email: '', message: '' });
@@ -45,7 +47,7 @@ export const ContactSection = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}
         >
-          Get In Touch
+          {t.contact.title}
         </h2>
         <p
           className={cn(
@@ -53,8 +55,7 @@ export const ContactSection = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}
         >
-          I'm currently looking for new opportunities. Whether you have a
-          question or just want to say hi, I'll try my best to get back to you!
+          {t.contact.description}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
@@ -67,7 +68,7 @@ export const ContactSection = () => {
           >
             <div className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-soft">
               <h3 className="font-display font-bold text-lg sm:text-xl mb-4 sm:mb-6">
-                Contact Information
+                {t.contact.contactInfo}
               </h3>
 
               <div className="space-y-3 sm:space-y-4">
@@ -79,7 +80,7 @@ export const ContactSection = () => {
                     <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs sm:text-sm text-muted-foreground">Email</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{t.contact.email}</p>
                     <p className="font-medium text-sm sm:text-base truncate">onggisanjaya@gmail.com</p>
                   </div>
                 </a>
@@ -92,7 +93,7 @@ export const ContactSection = () => {
                     <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
-                    <p className="text-xs sm:text-sm text-muted-foreground">Phone</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{t.contact.phone}</p>
                     <p className="font-medium text-sm sm:text-base">+62 895 3131 0890</p>
                   </div>
                 </a>
@@ -102,7 +103,7 @@ export const ContactSection = () => {
                     <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
-                    <p className="text-xs sm:text-sm text-muted-foreground">Location</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{t.contact.location}</p>
                     <p className="font-medium text-sm sm:text-base">Bogor, Indonesia</p>
                   </div>
                 </div>
@@ -118,7 +119,7 @@ export const ContactSection = () => {
             )}
           >
             <h3 className="font-display font-bold text-lg sm:text-xl mb-4 sm:mb-6">
-              Send a Message
+              {t.contact.sendMessage}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
@@ -127,7 +128,7 @@ export const ContactSection = () => {
                   htmlFor="name"
                   className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2"
                 >
-                  Name
+                  {t.contact.name}
                 </label>
                 <input
                   type="text"
@@ -138,7 +139,7 @@ export const ContactSection = () => {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl bg-secondary border-0 focus:ring-2 focus:ring-primary outline-none transition-all"
-                  placeholder="Your name"
+                  placeholder={t.contact.namePlaceholder}
                 />
               </div>
 
@@ -147,7 +148,7 @@ export const ContactSection = () => {
                   htmlFor="email"
                   className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2"
                 >
-                  Email
+                  {t.contact.email}
                 </label>
                 <input
                   type="email"
@@ -158,7 +159,7 @@ export const ContactSection = () => {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl bg-secondary border-0 focus:ring-2 focus:ring-primary outline-none transition-all"
-                  placeholder="your@email.com"
+                  placeholder={t.contact.emailPlaceholder}
                 />
               </div>
 
@@ -167,7 +168,7 @@ export const ContactSection = () => {
                   htmlFor="message"
                   className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2"
                 >
-                  Message
+                  {t.contact.message}
                 </label>
                 <textarea
                   id="message"
@@ -178,7 +179,7 @@ export const ContactSection = () => {
                     setFormData({ ...formData, message: e.target.value })
                   }
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl bg-secondary border-0 focus:ring-2 focus:ring-primary outline-none transition-all resize-none"
-                  placeholder="Your message..."
+                  placeholder={t.contact.messagePlaceholder}
                 />
               </div>
 
@@ -187,7 +188,7 @@ export const ContactSection = () => {
                 size="lg"
                 className="w-full rounded-lg sm:rounded-xl gap-2 text-sm sm:text-base"
               >
-                Send Message
+                {t.contact.sendButton}
                 <Send className="w-4 h-4" />
               </Button>
             </form>

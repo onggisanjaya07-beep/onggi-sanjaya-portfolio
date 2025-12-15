@@ -1,8 +1,11 @@
 import { ArrowRight, Download, Linkedin, Github, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/LanguageContext';
 import profilePhoto from '@/assets/profile-photo.jpg';
 
 export const HeroSection = () => {
+  const { t } = useLanguage();
+
   return (
     <section
       id="home"
@@ -32,12 +35,12 @@ export const HeroSection = () => {
           className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 animate-fade-up px-2"
           style={{ animationDelay: '0.1s' }}
         >
-          Hello, <span className="text-gradient">Onggi Sanjaya</span>
+          {t.hero.greeting} <span className="text-gradient">Onggi Sanjaya</span>
           <br />
-          I'm a{' '}
+          {t.hero.role}{' '}
           <span className="text-foreground">Frontend Engineer</span>
           <br />
-          with{' '}
+          {t.hero.experience}{' '}
           <span className="text-primary">2+ years</span> of experience
         </h1>
 
@@ -45,7 +48,7 @@ export const HeroSection = () => {
           className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 animate-fade-up px-2"
           style={{ animationDelay: '0.2s' }}
         >
-          I enjoy building <em className="text-foreground not-italic font-medium">sites & apps</em>.
+          {t.hero.description} <em className="text-foreground not-italic font-medium">{t.hero.sitesAndApps}</em>.
           My focus is{' '}
           <a
             href="#skills"
@@ -67,7 +70,7 @@ export const HeroSection = () => {
             className="rounded-full px-6 sm:px-8 gap-2 shadow-soft hover:shadow-elevated transition-shadow w-full sm:w-auto"
           >
             <a href="#contact">
-              Contact Me Here
+              {t.hero.contactMe}
               <ArrowRight className="w-4 h-4" />
             </a>
           </Button>
@@ -78,7 +81,7 @@ export const HeroSection = () => {
             className="rounded-full px-6 sm:px-8 gap-2 w-full sm:w-auto"
           >
             <a href="/CV_Onggi_Sanjaya.pdf" download>
-              Download CV
+              {t.hero.downloadCV}
               <Download className="w-4 h-4" />
             </a>
           </Button>

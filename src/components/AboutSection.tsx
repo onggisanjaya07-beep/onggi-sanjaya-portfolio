@@ -1,8 +1,10 @@
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
 export const AboutSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.2);
+  const { t } = useLanguage();
 
   return (
     <section
@@ -15,33 +17,31 @@ export const AboutSection = () => {
     >
       <div className="max-w-3xl mx-auto">
         <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12">
-          About Me
+          {t.about.title}
         </h2>
 
         <div className="space-y-4 sm:space-y-6 text-sm sm:text-base text-muted-foreground leading-relaxed">
           <p>
-            After graduating from{' '}
+            {t.about.paragraph1}{' '}
             <span className="font-medium text-foreground">
-              SMK Bhakti Insani Bogor
+              {t.about.school}
             </span>{' '}
-            with a focus on Software Engineering, I decided to pursue my passion
-            for programming. I enrolled in a coding bootcamp at{' '}
+            {t.about.paragraph2}{' '}
             <span className="font-medium text-foreground">
-              Cronos Studio Indonesia
+              {t.about.bootcamp}
             </span>{' '}
-            and learned{' '}
+            {t.about.paragraph3}{' '}
             <span className="font-medium text-foreground">
-              full-stack web development
+              {t.about.fullstack}
             </span>
             .
           </p>
 
           <p>
             <em className="not-italic text-foreground">
-              My favorite part of programming is the problem-solving aspect.
+              {t.about.favoritePart}
             </em>{' '}
-            I love the feeling of finally figuring out a solution to a complex
-            problem. My core stack is{' '}
+            {t.about.coreStack}{' '}
             <span className="font-medium text-foreground">
               React.js, Next.js, TypeScript, and Golang
             </span>
@@ -50,9 +50,9 @@ export const AboutSection = () => {
           </p>
 
           <p>
-            Currently, I'm working at{' '}
+            {t.about.currentWork}{' '}
             <span className="font-medium text-foreground">
-              PT Bank Rakyat Indonesia (BRI)
+              {t.about.company}
             </span>{' '}
             as a Frontend Engineer, contributing to the development of banking
             applications and internal dashboards. I'm always eager to learn new

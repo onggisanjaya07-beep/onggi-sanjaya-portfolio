@@ -1,6 +1,7 @@
 import { ExternalLink, Eye } from 'lucide-react';
 import { useState } from 'react';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 import { ProjectDetailModal } from './ProjectDetailModal';
 import projectBriapi from '@/assets/project-briapi.jpg';
@@ -103,12 +104,14 @@ const ProjectCard = ({
   project, 
   index, 
   isVisible, 
-  onOpenDetail 
+  onOpenDetail,
+  viewDetailText,
 }: { 
   project: Project; 
   index: number; 
   isVisible: boolean;
   onOpenDetail: (project: Project) => void;
+  viewDetailText: string;
 }) => {
   return (
     <div
@@ -169,7 +172,7 @@ const ProjectCard = ({
           className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground font-medium text-sm rounded-lg transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98]"
         >
           <Eye className="w-4 h-4" />
-          View Detail
+          {viewDetailText}
         </button>
       </div>
     </div>
@@ -179,6 +182,7 @@ const ProjectCard = ({
 export const ProjectsSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const { t } = useLanguage();
 
   return (
     <>
@@ -194,7 +198,7 @@ export const ProjectsSection = () => {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             )}
           >
-            My Projects
+            {t.projects.title}
           </h2>
           <p
             className={cn(
@@ -202,8 +206,7 @@ export const ProjectsSection = () => {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             )}
           >
-            Here are some of the projects I've worked on. Each project has helped
-            me grow as a developer and solve real-world problems.
+            {t.projects.description}
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
@@ -214,6 +217,7 @@ export const ProjectsSection = () => {
                 index={index} 
                 isVisible={isVisible}
                 onOpenDetail={setSelectedProject}
+                viewDetailText={t.projects.viewDetail}
               />
             ))}
           </div>

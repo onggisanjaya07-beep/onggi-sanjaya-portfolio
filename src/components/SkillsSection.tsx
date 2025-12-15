@@ -7,17 +7,27 @@ import {
   Users 
 } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
 interface SkillCategory {
-  title: string;
+  titleKey: keyof typeof categoryTitleKeys;
   icon: React.ReactNode;
   skills: string[];
 }
 
+const categoryTitleKeys = {
+  frontend: 'frontend',
+  backend: 'backend',
+  versionControl: 'versionControl',
+  testing: 'testing',
+  performance: 'performance',
+  collaboration: 'collaboration',
+} as const;
+
 const skillCategories: SkillCategory[] = [
   {
-    title: 'Frontend Development',
+    titleKey: 'frontend',
     icon: <Code2 className="w-6 h-6" />,
     skills: [
       'HTML',
@@ -32,27 +42,27 @@ const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: 'Backend & Database',
+    titleKey: 'backend',
     icon: <Database className="w-6 h-6" />,
     skills: ['Golang', 'Gin', 'Fiber', 'PostgreSQL', 'SQL Server', 'Drupal CMS'],
   },
   {
-    title: 'Version Control',
+    titleKey: 'versionControl',
     icon: <GitBranch className="w-6 h-6" />,
     skills: ['Git', 'GitHub', 'GitLab', 'Bitbucket', 'Jenkins CI/CD'],
   },
   {
-    title: 'Testing',
+    titleKey: 'testing',
     icon: <TestTube className="w-6 h-6" />,
     skills: ['Jest', 'Enzyme', 'Cypress', 'Selenium', 'Postman'],
   },
   {
-    title: 'Performance',
+    titleKey: 'performance',
     icon: <Gauge className="w-6 h-6" />,
     skills: ['Lighthouse', 'Web Vitals', 'Code Splitting', 'Lazy Loading'],
   },
   {
-    title: 'Collaboration',
+    titleKey: 'collaboration',
     icon: <Users className="w-6 h-6" />,
     skills: ['Jira', 'Microsoft Teams', 'Google Workspace', 'Agile/Scrum'],
   },
@@ -60,6 +70,7 @@ const skillCategories: SkillCategory[] = [
 
 export const SkillsSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
+  const { t } = useLanguage();
 
   return (
     <section
@@ -74,7 +85,7 @@ export const SkillsSection = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}
         >
-          Skills & Tools
+          {t.skills.title}
         </h2>
         <p
           className={cn(
@@ -82,13 +93,13 @@ export const SkillsSection = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}
         >
-          Technologies and tools I use to bring ideas to life.
+          {t.skills.description}
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {skillCategories.map((category, index) => (
             <div
-              key={category.title}
+              key={category.titleKey}
               className={cn(
                 'bg-card rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-soft hover:shadow-card transition-all duration-500',
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -99,7 +110,9 @@ export const SkillsSection = () => {
                 <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 text-primary">
                   {category.icon}
                 </div>
-                <h3 className="font-display font-semibold text-sm sm:text-base">{category.title}</h3>
+                <h3 className="font-display font-semibold text-sm sm:text-base">
+                  {t.skills.categories[category.titleKey]}
+                </h3>
               </div>
               <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {category.skills.map((skill) => (
